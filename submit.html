@@ -7,6 +7,7 @@
     <meta name="keywords" content="Vastu Shastra, Feng Shui, Astrology, Kundli, Palmistry, Tantra, Mantra, spiritual consultation, India">
     <title>SoulSync - Submit Your Problem</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -188,9 +189,9 @@
 
     <section id="submit">
         <h2>Sacred Consultation Request</h2>
-        <p>Share your concerns confidentially with our spiritual guides. You will receive a confirmation email with your case number.</p>
+        <p>Share your concerns confidentially with our spiritual guides. A consultation fee of ₹500 is required. You will receive a confirmation email with your case number and payment details.</p>
         <h3>Tell Us About Your Situation</h3>
-        <form id="consultation-form" action="https://script.google.com/macros/s/AKfycby9Y_7pwHiRnDxjKGjHw6W8OIUZPehBQFWh5zKLA6Bl84424msZUTjyLrvSeuq-vcmeyw/exec" method="POST">
+        <form id="consultation-form" action="https://script.google.com/macros/s/AKfycbz64SE2HcVvntOf0PuN94lUKwT8PKSZsR0Lya8-ijn2rzsEeSe2iLT5P1R0Z5x93rj03A/exec" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -253,7 +254,7 @@
             <label for="files">File Upload (optional: photos of home, palm, kundli):</label>
             <input type="file" id="files" multiple>
 
-            <button type="submit" id="submit-button">Submit Request</button>
+            <button type="submit" id="submit-button">Pay ₹500 and Submit</button>
         </form>
     </section>
 
@@ -261,7 +262,7 @@
         <p>&copy; 2025 SoulSync. All rights reserved. | <a href="mailto:contact@soulsync.com">contact@soulsync.com</a></p>
     </footer>
     <script>
-        // Form submission
+        // Form submission with Razorpay
         document.getElementById('consultation-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const form = e.target;
@@ -277,6 +278,10 @@
             formData.append('description', form.description.value);
             const files = document.getElementById('files').files;
             const filesArray = await Promise.all(Array.from(files).map(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size exceeds 5MB limit.');
+                    throw new Error('File size exceeds 5MB limit.');
+                }
                 return new Promise((resolve) => {
                     const reader = new FileReader();
                     reader.onload = () => {
@@ -292,32 +297,92 @@
             if (filesArray.length > 0) {
                 formData.append('filesJson', JSON.stringify(filesArray));
             }
+
             try {
-                console.log("Submitting form to:", form.action);
-                const response = await fetch(form.action, {
+                // Step 1: Create Razorpay order
+                console.log("Creating Razorpay order...");
+                const orderResponse = await fetch(form.action, {
                     method: 'POST',
-                    body: formData,
-                    mode: 'no-cors'
+                    body: JSON.stringify({ action: 'create_order', amount: 50000 }), // ₹500 in paise
+                    headers: { 'Content-Type': 'application/json' }
                 });
-                const resultText = await response.text();
-                let result;
+                const orderText = await orderResponse.text();
+                console.log("Order response:", orderText);
+                let order;
                 try {
-                    result = JSON.parse(resultText);
+                    order = JSON.parse(orderText);
                 } catch (e) {
-                    console.error("Failed to parse response:", resultText);
-                    throw new Error("Invalid server response");
+                    console.error("Failed to parse order response:", orderText);
+                    alert('Error: Failed to initiate payment. Please try again.');
+                    return;
                 }
-                if (result.status === 'success') {
-                    alert(`Thank you for your submission! Your case number is ${result.caseNo}. A confirmation email has been sent to ${form.email.value}.`);
-                    console.log("Form submitted successfully, caseNo:", result.caseNo);
-                    form.reset();
-                } else {
-                    console.error("Submission error:", result.message);
-                    alert('Error: ' + result.message);
+                if (order.status !== 'success') {
+                    console.error("Order creation failed:", order.message);
+                    alert('Error: ' + order.message);
+                    return;
                 }
+
+                // Step 2: Open Razorpay checkout
+                const options = {
+                    key: 'rzp_test_R8L6AbMiGhUqbR', // Replace with your Razorpay Key ID (test mode)
+                    amount: 50000, // ₹500 in paise
+                    currency: 'INR',
+                    name: 'SoulSync',
+                    description: 'Consultation Fee',
+                    order_id: order.orderId,
+                    handler: async function (response) {
+                        // Step 3: Send form data with payment details to Google Apps Script
+                        formData.append('payment_id', response.razorpay_payment_id);
+                        formData.append('order_id', response.razorpay_order_id);
+                        formData.append('signature', response.razorpay_signature);
+                        try {
+                            console.log("Submitting form with payment details...");
+                            const submitResponse = await fetch(form.action, {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const resultText = await submitResponse.text();
+                            console.log("Submission response:", resultText);
+                            let result;
+                            try {
+                                result = resultText ? JSON.parse(resultText) : { status: 'success', caseNo: 'Unknown' };
+                            } catch (e) {
+                                console.error("Failed to parse submission response:", resultText);
+                                alert('Submission and payment successful! Data saved, but case number retrieval failed. Check your email for confirmation.');
+                                form.reset();
+                                return;
+                            }
+                            if (result.status === 'success') {
+                                alert(`Thank you for your submission and payment! Your case number is ${result.caseNo}. A confirmation email has been sent to ${form.email.value}.`);
+                                console.log("Form submitted successfully, caseNo:", result.caseNo);
+                                form.reset();
+                            } else {
+                                console.error("Submission error:", result.message);
+                                alert('Error: ' + result.message);
+                            }
+                        } catch (error) {
+                            console.error("Submission failed:", error);
+                            alert('Payment successful, but form submission failed. Please contact support at contact@soulsync.com.');
+                        }
+                    },
+                    prefill: {
+                        name: form.name.value,
+                        email: form.email.value,
+                        contact: form.phone.value
+                    },
+                    theme: {
+                        color: '#D4A017'
+                    }
+                };
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function (response) {
+                    console.error("Payment failed:", response.error);
+                    alert('Payment failed: ' + response.error.description);
+                });
+                rzp.open();
             } catch (error) {
-                console.error("Submission failed:", error);
-                alert('Submission failed: ' + error.message);
+                console.error("Order creation failed:", error);
+                alert('Error: Failed to initiate payment. Please try again.');
             }
         });
     </script>
