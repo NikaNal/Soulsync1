@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submit your concerns for personalized Vastu, Feng Shui, Astrology, and traditional Indian consultations with SoulSync.">
+    <meta name="keywords" content="Vastu Shastra, Feng Shui, Astrology, Kundli, Palmistry, Tantra, Mantra, spiritual consultation, India">
+    <title>SoulSync - Submit Your Problem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #FFFFFF;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" opacity="0.05"%3E%3Cpath d="M0 0h80v80H0z" fill="none"/%3E%3Cpath d="M40 10 L70 30 L70 50 L40 70 L10 50 L10 30 Z" stroke="%23D4A017" stroke-width="1" fill="none"/%3E%3C/svg%3E');
+            background-size: 100px 100px;
+            z-index: -1;
+        }
+        header {
+            background: linear-gradient(135deg, #008080 0%, #D4A017 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+        nav {
+            background: #FFFFFF;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #333333;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #D4A017;
+        }
+        section {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: #008080;
+        }
+        h2 {
+            font-size: 2.5em;
+            text-align: center;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        h2::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: #D4A017;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        h3 {
+            font-size: 1.8em;
+            margin: 1.5rem 0 1rem;
+        }
+        form {
+            display: grid;
+            gap: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            font-weight: 600;
+            color: #333333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #D4A017;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #008080;
+            box-shadow: 0 0 5px rgba(0, 128, 128, 0.3);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        button {
+            background: #D4A017;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background: #008080;
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #008080;
+            color: white;
+            margin-top: 2rem;
+        }
+        footer a {
+            color: #D4A017;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2em; }
+            header p { font-size: 1em; }
+            nav a { margin: 0 0.5rem; font-size: 1em; }
+            section { margin: 1rem; padding: 1.5rem; }
+            form { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SoulSync</h1>
+        <p>Timeless Wisdom for Modern Lives</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="submit.html">Submit Your Problem</a>
+    </nav>
+
+    <section id="submit">
+        <h2>Sacred Consultation Request</h2>
+        <p>Share your concerns confidentially with our spiritual guides. You will receive a confirmation email with your case number.</p>
+        <h3>Tell Us About Your Situation</h3>
+        <form id="consultation-form" action="https://script.google.com/macros/s/AKfycby9Y_7pwHiRnDxjKGjHw6W8OIUZPehBQFWh5zKLA6Bl84424msZUTjyLrvSeuq-vcmeyw/exec" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="tob">Time of Birth:</label>
+            <input type="time" id="tob" name="tob">
+
+            <label for="pob">Place of Birth:</label>
+            <input type="text" id="pob" name="pob">
+
+            <label for="address">Current Address:</label>
+            <input type="text" id="address" name="address">
+
+            <label for="category">Category of Problem:</label>
+            <select id="category" name="category" required>
+                <option value="">Select...</option>
+                <option value="Marriage issues">Marriage issues</option>
+                <option value="Parenting">Parenting</option>
+                <option value="Disputes with relatives">Disputes with relatives</option>
+                <option value="Joint family harmony">Joint family harmony</option>
+                <option value="Finding love">Finding love</option>
+                <option value="Relationship compatibility">Relationship compatibility</option>
+                <option value="Breakup issues">Breakup issues</option>
+                <option value="Rekindling love">Rekindling love</option>
+                <option value="Job growth">Job growth</option>
+                <option value="Promotions">Promotions</option>
+                <option value="Business prosperity">Business prosperity</option>
+                <option value="Partnerships">Partnerships</option>
+                <option value="Court cases">Court cases</option>
+                <option value="Land disputes">Land disputes</option>
+                <option value="Property buying/selling">Property buying/selling</option>
+                <option value="Vastu for new property">Vastu for new property</option>
+                <option value="Debt problems">Debt problems</option>
+                <option value="Income growth">Income growth</option>
+                <option value="Investments">Investments</option>
+                <option value="Chronic illness support">Chronic illness support</option>
+                <option value="Energy imbalance">Energy imbalance</option>
+                <option value="Home remedies (traditional systems only)">Home remedies (traditional systems only)</option>
+                <option value="Anxiety">Anxiety</option>
+                <option value="Stress relief">Stress relief</option>
+                <option value="Confidence building">Confidence building</option>
+                <option value="Peace of mind">Peace of mind</option>
+                <option value="Meditation guidance">Meditation guidance</option>
+                <option value="Kundli dosha remedies">Kundli dosha remedies</option>
+                <option value="Mantra sadhana">Mantra sadhana</option>
+                <option value="For anything that doesn’t fit the above">For anything that doesn’t fit the above</option>
+            </select>
+
+            <label for="description">Detailed Description of Problem:</label>
+            <textarea id="description" name="description" rows="10" required placeholder="Write in Hindi, English, or any major regional Indian language."></textarea>
+
+            <label for="files">File Upload (optional: photos of home, palm, kundli):</label>
+            <input type="file" id="files" multiple>
+
+            <button type="submit" id="submit-button">Submit Request</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SoulSync. All rights reserved. | <a href="mailto:contact@soulsync.com">contact@soulsync.com</a></p>
+    </footer>
+    <script>
+        // Form submission
+        document.getElementById('consultation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData();
+            formData.append('name', form.name.value);
+            formData.append('email', form.email.value);
+            formData.append('phone', form.phone.value);
+            formData.append('dob', form.dob.value);
+            formData.append('tob', form.tob.value);
+            formData.append('pob', form.pob.value);
+            formData.append('address', form.address.value);
+            formData.append('category', form.category.value);
+            formData.append('description', form.description.value);
+            const files = document.getElementById('files').files;
+            const filesArray = await Promise.all(Array.from(files).map(file => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        resolve({
+                            name: file.name,
+                            type: file.type,
+                            base64: reader.result.split(',')[1]
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }));
+            if (filesArray.length > 0) {
+                formData.append('filesJson', JSON.stringify(filesArray));
+            }
+            try {
+                console.log("Submitting form to:", form.action);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                });
+                const resultText = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(resultText);
+                } catch (e) {
+                    console.error("Failed to parse response:", resultText);
+                    throw new Error("Invalid server response");
+                }
+                if (result.status === 'success') {
+                    alert(`Thank you for your submission! Your case number is ${result.caseNo}. A confirmation email has been sent to ${form.email.value}.`);
+                    console.log("Form submitted successfully, caseNo:", result.caseNo);
+                    form.reset();
+                } else {
+                    console.error("Submission error:", result.message);
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error("Submission failed:", error);
+                alert('Submission failed: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
